@@ -1,0 +1,1115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KDG FAMILY – Plateforme Premium Poppo Live</title>
+<link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;900&family=Rajdhani:wght@400;600;700&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+:root {
+  --gold: #FFD700;
+  --gold-light: #FFE84D;
+  --gold-dark: #B8960C;
+  --deep: #05040D;
+  --deep2: #0A0818;
+  --purple: #1A0A3C;
+  --violet: #3D1A78;
+  --accent: #9B4DFF;
+  --accent2: #FF4DBC;
+  --white: #F5F0FF;
+  --glass: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,215,0,0.15);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: var(--deep);
+  color: var(--white);
+  overflow-x: hidden;
+}
+
+/* ── CANVAS PARTICLES ── */
+#particles-canvas {
+  position: fixed; top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none; z-index:0;
+  opacity:0.4;
+}
+
+/* ── NAVBAR ── */
+nav {
+  position: fixed; top:0; left:0; width:100%; z-index:1000;
+  padding: 0 40px;
+  background: rgba(5,4,13,0.85);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  display: flex; align-items:center; justify-content:space-between;
+  height: 70px;
+  animation: slideDown .7s ease forwards;
+}
+
+@keyframes slideDown {
+  from { transform:translateY(-100%); opacity:0; }
+  to   { transform:translateY(0);     opacity:1; }
+}
+
+.nav-logo {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  background: linear-gradient(90deg, var(--gold), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+}
+
+.nav-links { display:flex; gap:8px; align-items:center; }
+
+.nav-links a {
+  color: var(--white);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: .9rem;
+  padding: 8px 16px;
+  border-radius: 6px;
+  transition: all .3s;
+  position: relative;
+  letter-spacing: 1px;
+}
+.nav-links a:hover { color: var(--gold); background: var(--glass); }
+
+/* Dropdown */
+.dropdown { position: relative; }
+.dropdown-menu {
+  display:none;
+  position:absolute; top:100%; left:0;
+  background: rgba(10,8,24,0.97);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  min-width: 220px;
+  padding: 8px 0;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  animation: fadeIn .2s ease;
+}
+.dropdown:hover .dropdown-menu { display:block; }
+.dropdown-menu a {
+  display:block; padding:12px 20px;
+  border-radius:0; color: var(--white);
+}
+.dropdown-menu a:hover { color:var(--gold); background:var(--glass); }
+
+/* Lang selector */
+.lang-select {
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  color: var(--gold);
+  border-radius: 6px;
+  padding: 7px 12px;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  font-size:.9rem;
+}
+
+/* Mobile menu */
+.hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
+.hamburger span { width:25px; height:2px; background:var(--gold); border-radius:2px; transition:.3s; }
+.mobile-menu {
+  display:none; position:fixed; top:70px; left:0; width:100%;
+  background:rgba(5,4,13,.97); z-index:999;
+  padding:20px; flex-direction:column; gap:4px;
+  border-bottom:1px solid var(--glass-border);
+}
+.mobile-menu a { display:block; padding:12px 16px; color:var(--white); text-decoration:none; font-weight:600; border-radius:8px; }
+.mobile-menu a:hover { background:var(--glass); color:var(--gold); }
+
+/* ── HERO ── */
+#accueil {
+  min-height: 100vh;
+  display: flex; align-items:center; justify-content:center;
+  text-align: center;
+  padding: 100px 20px 60px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position:absolute; inset:0;
+  background: 
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(155,77,255,0.2) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(255,77,188,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 50% at 10% 60%, rgba(255,215,0,0.08) 0%, transparent 50%);
+}
+
+.hero-ring {
+  position:absolute;
+  border-radius:50%;
+  border: 1px solid rgba(255,215,0,0.1);
+  animation: rotateSlow linear infinite;
+}
+.ring1 { width:600px; height:600px; top:50%; left:50%; transform:translate(-50%,-50%); animation-duration:30s; }
+.ring2 { width:800px; height:800px; top:50%; left:50%; transform:translate(-50%,-50%); animation-duration:45s; animation-direction:reverse; border-color:rgba(155,77,255,0.08); }
+.ring3 { width:1000px; height:1000px; top:50%; left:50%; transform:translate(-50%,-50%); animation-duration:60s; border-color:rgba(255,77,188,0.05); }
+
+@keyframes rotateSlow { to { transform:translate(-50%,-50%) rotate(360deg); } }
+
+.hero-content { position:relative; z-index:2; max-width:800px; }
+
+.hero-badge {
+  display:inline-block;
+  background: linear-gradient(135deg, rgba(255,215,0,0.15), rgba(155,77,255,0.15));
+  border: 1px solid rgba(255,215,0,0.3);
+  border-radius:30px;
+  padding:8px 24px;
+  font-size:.8rem;
+  letter-spacing:3px;
+  font-weight:700;
+  color:var(--gold);
+  margin-bottom:24px;
+  animation: fadeInUp .8s .2s both;
+}
+
+.hero-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(2.5rem, 7vw, 5rem);
+  font-weight: 900;
+  line-height: 1.05;
+  margin-bottom: 8px;
+  animation: fadeInUp .8s .35s both;
+}
+
+.hero-title .gold { 
+  background: linear-gradient(135deg, var(--gold), var(--gold-light), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-sub {
+  font-size: 1.15rem;
+  color: rgba(245,240,255,0.6);
+  margin-bottom: 12px;
+  font-weight:400;
+  animation: fadeInUp .8s .45s both;
+}
+
+.hero-tagline {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 40px;
+  animation: fadeInUp .8s .5s both;
+}
+
+.hero-cta-group {
+  display:flex; gap:16px; justify-content:center; flex-wrap:wrap;
+  animation: fadeInUp .8s .65s both;
+  margin-bottom:40px;
+}
+
+.btn-primary {
+  display:inline-flex; align-items:center; gap:10px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+  color: #000;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700; font-size:1rem;
+  padding:14px 32px;
+  border-radius:12px;
+  border:none; cursor:pointer;
+  text-decoration:none;
+  transition:all .3s;
+  letter-spacing:1px;
+  position:relative; overflow:hidden;
+}
+.btn-primary::after {
+  content:'';position:absolute;inset:0;
+  background:rgba(255,255,255,0.15);
+  transform:translateX(-100%);
+  transition:.4s;
+}
+.btn-primary:hover::after { transform:translateX(100%); }
+.btn-primary:hover { transform:translateY(-3px); box-shadow:0 15px 40px rgba(255,215,0,0.4); }
+
+.btn-secondary {
+  display:inline-flex; align-items:center; gap:10px;
+  background: var(--glass);
+  color: var(--white);
+  border: 1px solid var(--glass-border);
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700; font-size:1rem;
+  padding:14px 32px;
+  border-radius:12px;
+  cursor:pointer;
+  text-decoration:none;
+  transition:all .3s;
+  letter-spacing:1px;
+  backdrop-filter:blur(10px);
+}
+.btn-secondary:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-3px); }
+
+.btn-whatsapp {
+  display:inline-flex; align-items:center; gap:10px;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  color:#fff;
+  font-family:'Rajdhani',sans-serif;
+  font-weight:700; font-size:1rem;
+  padding:14px 28px;
+  border-radius:12px;
+  border:none; cursor:pointer;
+  text-decoration:none;
+  transition:all .3s;
+  letter-spacing:1px;
+}
+.btn-whatsapp:hover { transform:translateY(-3px); box-shadow:0 15px 40px rgba(37,211,102,0.4); }
+
+@keyframes fadeInUp {
+  from { opacity:0; transform:translateY(30px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity:0; }
+  to   { opacity:1; }
+}
+
+/* ── SCROLL INDICATOR ── */
+.scroll-indicator {
+  position:absolute; bottom:30px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:8px;
+  animation:fadeInUp .8s .9s both;
+  opacity:.5;
+}
+.scroll-dot {
+  width:6px; height:6px; border-radius:50%;
+  background:var(--gold);
+  animation: scrollBounce 1.5s infinite;
+}
+.scroll-dot:nth-child(2) { animation-delay:.2s; }
+.scroll-dot:nth-child(3) { animation-delay:.4s; }
+@keyframes scrollBounce { 0%,80%,100%{opacity:.2} 40%{opacity:1} }
+
+/* ── SECTIONS ── */
+section { position:relative; z-index:1; }
+
+.section-header {
+  text-align:center;
+  margin-bottom:60px;
+}
+.section-label {
+  font-size:.75rem; letter-spacing:4px; font-weight:700;
+  color:var(--accent); margin-bottom:12px; display:block;
+}
+.section-title {
+  font-family:'Orbitron',sans-serif;
+  font-size:clamp(1.8rem,4vw,2.8rem);
+  font-weight:900;
+  background:linear-gradient(135deg, var(--white), var(--gold));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.section-divider {
+  width:60px; height:3px;
+  background:linear-gradient(90deg, var(--gold), var(--accent));
+  margin:16px auto 0;
+  border-radius:3px;
+}
+
+/* ── SERVICES ── */
+#services { padding:100px 40px; }
+
+.services-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+  gap:24px;
+  max-width:1200px;
+  margin:0 auto;
+}
+
+.service-card {
+  background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+  border: 1px solid var(--glass-border);
+  border-radius:20px;
+  padding:36px 28px;
+  transition:all .4s;
+  position:relative;
+  overflow:hidden;
+  cursor:default;
+}
+.service-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform:translateX(-100%);
+  transition:.5s;
+}
+.service-card:hover::before { transform:translateX(100%); }
+.service-card:hover {
+  border-color:rgba(255,215,0,0.3);
+  transform:translateY(-8px);
+  box-shadow:0 30px 60px rgba(0,0,0,0.4), 0 0 30px rgba(155,77,255,0.1);
+}
+
+.service-icon {
+  width:60px; height:60px;
+  background:linear-gradient(135deg, var(--violet), var(--accent));
+  border-radius:16px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:1.5rem;
+  margin-bottom:20px;
+}
+.service-card h3 {
+  font-family:'Orbitron',sans-serif;
+  font-size:1.1rem; font-weight:700;
+  color:var(--gold);
+  margin-bottom:12px;
+}
+.service-card p { color:rgba(245,240,255,0.65); line-height:1.6; font-size:.95rem; }
+
+/* ── REGISTRATION ── */
+#enregistrement { padding:100px 40px; background:linear-gradient(180deg, var(--deep) 0%, var(--deep2) 100%); }
+
+.steps-container { max-width:900px; margin:0 auto; }
+
+.step {
+  display:flex; gap:24px; margin-bottom:32px;
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:20px;
+  padding:28px;
+  transition:all .4s;
+  position:relative;
+  overflow:hidden;
+}
+.step:hover { border-color:rgba(255,215,0,0.25); transform:translateX(8px); }
+
+.step-number {
+  min-width:50px; height:50px;
+  background:linear-gradient(135deg, var(--gold), var(--gold-dark));
+  border-radius:12px;
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Orbitron',sans-serif;
+  font-weight:900; font-size:1rem;
+  color:#000;
+}
+.step-content h4 {
+  font-family:'Rajdhani',sans-serif;
+  font-size:1.1rem; font-weight:700;
+  color:var(--gold); margin-bottom:6px;
+}
+.step-content p { color:rgba(245,240,255,0.7); line-height:1.6; font-size:.95rem; }
+
+.agency-code {
+  display:inline-flex; align-items:center; gap:10px;
+  background:rgba(255,215,0,0.1);
+  border:1px solid rgba(255,215,0,0.3);
+  border-radius:8px;
+  padding:6px 14px;
+  font-family:'Orbitron',sans-serif;
+  font-weight:700; color:var(--gold);
+  cursor:pointer; margin-top:8px;
+  transition:.3s;
+  font-size:.9rem;
+}
+.agency-code:hover { background:rgba(255,215,0,0.2); }
+.agency-code i { font-size:.8rem; }
+
+.pseudo-hint {
+  background:rgba(155,77,255,0.1);
+  border:1px solid rgba(155,77,255,0.3);
+  border-radius:8px;
+  padding:8px 14px;
+  margin-top:8px;
+  font-size:.9rem;
+  color:var(--accent);
+}
+
+/* Registration CTA cards */
+.reg-cards {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px; max-width:900px; margin:60px auto 0;
+}
+
+.reg-card {
+  border-radius:20px; padding:36px;
+  text-align:center;
+  position:relative; overflow:hidden;
+  transition:all .4s;
+}
+.reg-card.live {
+  background:linear-gradient(135deg, rgba(155,77,255,0.2), rgba(61,26,120,0.4));
+  border:1px solid rgba(155,77,255,0.3);
+}
+.reg-card.agent {
+  background:linear-gradient(135deg, rgba(255,215,0,0.1), rgba(184,150,12,0.2));
+  border:1px solid rgba(255,215,0,0.3);
+}
+.reg-card:hover { transform:translateY(-10px); box-shadow:0 30px 60px rgba(0,0,0,0.5); }
+.reg-card .card-icon { font-size:3rem; margin-bottom:16px; }
+.reg-card h3 { font-family:'Orbitron',sans-serif; font-size:1.2rem; font-weight:900; margin-bottom:12px; }
+.reg-card.live h3 { color:var(--accent); }
+.reg-card.agent h3 { color:var(--gold); }
+.reg-card p { color:rgba(245,240,255,0.6); font-size:.9rem; line-height:1.6; margin-bottom:24px; }
+.reg-card .card-id { font-family:'Orbitron',sans-serif; font-size:.75rem; color:rgba(245,240,255,0.4); margin-bottom:16px; }
+
+/* ── ABOUT ── */
+#apropos { padding:100px 40px; }
+.about-container {
+  max-width:900px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;
+}
+.about-text h3 {
+  font-family:'Orbitron',sans-serif; font-size:1.5rem;
+  font-weight:900; color:var(--gold); margin-bottom:20px;
+}
+.about-text p { color:rgba(245,240,255,0.7); line-height:1.8; margin-bottom:16px; font-size:.95rem; }
+.about-stats {
+  display:grid; grid-template-columns:1fr 1fr; gap:16px;
+}
+.stat-box {
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:16px; padding:24px;
+  text-align:center;
+  transition:.3s;
+}
+.stat-box:hover { border-color:rgba(255,215,0,0.3); }
+.stat-box .num {
+  font-family:'Orbitron',sans-serif;
+  font-size:2rem; font-weight:900;
+  background:linear-gradient(135deg,var(--gold),var(--accent));
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.stat-box .label { font-size:.8rem; color:rgba(245,240,255,0.5); margin-top:4px; }
+
+/* ── FLOATING BUTTONS ── */
+.floating-btns {
+  position:fixed; bottom:30px; right:30px;
+  display:flex; flex-direction:column; gap:12px; z-index:500;
+}
+.fab {
+  width:56px; height:56px; border-radius:16px;
+  display:flex; align-items:center; justify-content:center;
+  cursor:pointer; border:none;
+  font-size:1.2rem; transition:all .3s;
+  text-decoration:none; color:#fff;
+  box-shadow:0 8px 25px rgba(0,0,0,0.4);
+}
+.fab-wa { background:linear-gradient(135deg,#25D366,#128C7E); }
+.fab-wa:hover { transform:scale(1.1); box-shadow:0 12px 30px rgba(37,211,102,0.5); }
+
+/* ── TOAST ── */
+#toast {
+  position:fixed; bottom:80px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:linear-gradient(135deg,var(--violet),var(--accent));
+  color:#fff; padding:12px 24px; border-radius:30px;
+  font-weight:600; font-size:.9rem;
+  opacity:0; transition:all .4s; z-index:9999;
+  pointer-events:none;
+}
+#toast.show { opacity:1; transform:translateX(-50%) translateY(0); }
+
+/* ── FOOTER ── */
+footer {
+  background:var(--deep2);
+  border-top:1px solid var(--glass-border);
+  padding:40px;
+  text-align:center;
+}
+.footer-logo {
+  font-family:'Orbitron',sans-serif; font-size:1.5rem; font-weight:900;
+  background:linear-gradient(90deg,var(--gold),var(--accent));
+  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  margin-bottom:16px;
+}
+footer p { color:rgba(245,240,255,0.4); font-size:.85rem; }
+.footer-links { display:flex; justify-content:center; gap:20px; margin-top:16px; flex-wrap:wrap; }
+.footer-links a { color:rgba(245,240,255,0.4); text-decoration:none; font-size:.85rem; transition:.3s; }
+.footer-links a:hover { color:var(--gold); }
+
+/* ── REVEAL ANIMATIONS ── */
+.reveal {
+  opacity:0; transform:translateY(40px);
+  transition:opacity .7s ease, transform .7s ease;
+}
+.reveal.visible { opacity:1; transform:translateY(0); }
+.reveal-left { opacity:0; transform:translateX(-40px); transition:opacity .7s, transform .7s; }
+.reveal-left.visible { opacity:1; transform:translateX(0); }
+.reveal-right { opacity:0; transform:translateX(40px); transition:opacity .7s, transform .7s; }
+.reveal-right.visible { opacity:1; transform:translateX(0); }
+
+/* ── GLOW PULSE ── */
+@keyframes glowPulse {
+  0%,100% { box-shadow:0 0 20px rgba(255,215,0,0.2); }
+  50%      { box-shadow:0 0 40px rgba(255,215,0,0.5); }
+}
+.glow-pulse { animation:glowPulse 2.5s infinite; }
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .about-container { grid-template-columns:1fr; }
+  nav { padding:0 20px; }
+  .nav-links { display:none; }
+  .hamburger { display:flex; }
+}
+@media(max-width:600px){
+  #services, #enregistrement, #apropos { padding:80px 20px; }
+  .step { flex-direction:column; }
+  .hero-cta-group { flex-direction:column; align-items:center; }
+}
+
+/* ── SHIMMER for cards ── */
+@keyframes shimmer {
+  0% { background-position:-200% center; }
+  100% { background-position:200% center; }
+}
+.shimmer-text {
+  background:linear-gradient(90deg, var(--gold) 0%, var(--gold-light) 30%, var(--gold) 60%, var(--accent) 100%);
+  background-size:200% auto;
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  animation:shimmer 3s linear infinite;
+}
+
+/* Live indicator */
+.live-dot {
+  display:inline-block; width:8px; height:8px;
+  background:#FF4444; border-radius:50%;
+  margin-right:6px;
+  animation:livePulse 1.2s infinite;
+}
+@keyframes livePulse {
+  0%,100%{box-shadow:0 0 0 0 rgba(255,68,68,0.6);}
+  50%{box-shadow:0 0 0 6px rgba(255,68,68,0);}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<!-- TOAST -->
+<div id="toast">✓ Copié !</div>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-logo">KDG FAMILY</div>
+  <div class="nav-links">
+    <a href="#accueil" data-i18n="nav_home">Accueil</a>
+    <a href="#services" data-i18n="nav_services">Services</a>
+    <div class="dropdown">
+      <a href="#enregistrement" data-i18n="nav_register">Enregistrement ▾</a>
+      <div class="dropdown-menu">
+        <a href="https://invite-poppo.com/dfZ5W8" target="_blank">🎥 <span data-i18n="nav_live">Faire du Live</span></a>
+        <a href="https://invite-poppo.com/CfANdB" target="_blank">🤝 <span data-i18n="nav_agent">Devenir Agent</span></a>
+      </div>
+    </div>
+    <a href="#apropos" data-i18n="nav_about">À propos</a>
+    <select class="lang-select" id="langSelect">
+      <option value="fr">🇫🇷 FR</option>
+      <option value="en">🇬🇧 EN</option>
+      <option value="es">🇪🇸 ES</option>
+    </select>
+  </div>
+  <div class="hamburger" onclick="toggleMobile()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#accueil" onclick="toggleMobile()" data-i18n="nav_home">🏠 Accueil</a>
+  <a href="#services" onclick="toggleMobile()" data-i18n="nav_services">⚡ Services</a>
+  <a href="https://invite-poppo.com/dfZ5W8" target="_blank">🎥 <span data-i18n="nav_live">Faire du Live</span></a>
+  <a href="https://invite-poppo.com/CfANdB" target="_blank">🤝 <span data-i18n="nav_agent">Devenir Agent</span></a>
+  <a href="#apropos" onclick="toggleMobile()" data-i18n="nav_about">ℹ️ À propos</a>
+  <select class="lang-select" id="langSelectMobile" style="margin-top:8px;width:100%">
+    <option value="fr">🇫🇷 Français</option>
+    <option value="en">🇬🇧 English</option>
+    <option value="es">🇪🇸 Español</option>
+  </select>
+</div>
+
+<!-- ═══ HERO ═══ -->
+<section id="accueil">
+  <div class="hero-bg"></div>
+  <div class="ring1 hero-ring"></div>
+  <div class="ring2 hero-ring"></div>
+  <div class="ring3 hero-ring"></div>
+  <div class="hero-content">
+    <div class="hero-badge">✦ PLATEFORME PREMIUM ✦</div>
+    <h1 class="hero-title">
+      <span class="gold">KDG</span> FAMILY
+    </h1>
+    <p class="hero-sub" data-i18n="hero_sub">Votre guide officiel Poppo Live</p>
+    <p class="hero-tagline" data-i18n="hero_tagline">🌍 Rencontrez des amis plus intéressants du monde entier</p>
+
+    <div class="hero-cta-group">
+      <a href="https://invite-poppo.com/dfZ5W8" target="_blank" class="btn-primary glow-pulse">
+        <span class="live-dot"></span><span data-i18n="cta_live">Faire du Live</span>
+      </a>
+      <a href="https://invite-poppo.com/CfANdB" target="_blank" class="btn-secondary">
+        🤝 <span data-i18n="cta_agent">Devenir Agent</span>
+      </a>
+      <a href="https://invite-poppo.com/dfZ5W8" target="_blank" class="btn-primary" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">
+        <i class="fas fa-download"></i> <span data-i18n="cta_dl">Télécharger Poppo Live</span>
+      </a>
+    </div>
+
+    <a href="https://wa.me/242055775539" target="_blank" class="btn-whatsapp">
+      <i class="fab fa-whatsapp"></i> <span data-i18n="cta_wa">Contactez-nous sur WhatsApp</span>
+    </a>
+
+    <p style="margin-top:24px;font-size:.8rem;color:rgba(245,240,255,0.35);" data-i18n="hero_promo">
+      🔥 Des millions d'utilisateurs vous attendent — rejoignez la communauté la plus dynamique du monde !
+    </p>
+  </div>
+  <div class="scroll-indicator">
+    <div class="scroll-dot"></div>
+    <div class="scroll-dot"></div>
+    <div class="scroll-dot"></div>
+  </div>
+</section>
+
+<!-- ═══ SERVICES ═══ -->
+<section id="services">
+  <div class="section-header reveal">
+    <span class="section-label" data-i18n="services_label">NOS SERVICES</span>
+    <h2 class="section-title" data-i18n="services_title">Ce que nous offrons</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="service-icon">🎙️</div>
+      <h3 data-i18n="s1_title">Coaching Live</h3>
+      <p data-i18n="s1_desc">Apprenez à maîtriser Poppo Live avec nos guides étape par étape pour maximiser vos gains et votre audience.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🧩</div>
+      <h3 data-i18n="s2_title">Guide d'inscription</h3>
+      <p data-i18n="s2_desc">Instructions claires et précises pour créer votre compte, configurer votre profil et rejoindre notre agence KDG.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🤝</div>
+      <h3 data-i18n="s3_title">Réseau d'Agents</h3>
+      <p data-i18n="s3_desc">Devenez agent KDG et construisez votre propre équipe. Stratégies exclusives pour développer votre activité.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">📊</div>
+      <h3 data-i18n="s4_title">Stratégies & Croissance</h3>
+      <p data-i18n="s4_desc">Analyse de performance, conseils de monétisation et accompagnement personnalisé pour chaque membre KDG.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🌐</div>
+      <h3 data-i18n="s5_title">Communauté Globale</h3>
+      <p data-i18n="s5_desc">Accédez à un réseau mondial de créateurs et d'agents partenaires. Ensemble, on va plus loin.</p>
+    </div>
+    <div class="service-card reveal">
+      <div class="service-icon">🛡️</div>
+      <h3 data-i18n="s6_title">Support Premium</h3>
+      <p data-i18n="s6_desc">Une équipe dédiée disponible pour répondre à toutes vos questions et vous accompagner à chaque étape.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ENREGISTREMENT ═══ -->
+<section id="enregistrement">
+  <div class="section-header reveal">
+    <span class="section-label" data-i18n="reg_label">GUIDE COMPLET</span>
+    <h2 class="section-title" data-i18n="reg_title">Comment s'inscrire</h2>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="steps-container">
+
+    <div class="step reveal">
+      <div class="step-number">01</div>
+      <div class="step-content">
+        <h4 data-i18n="step1_title">Téléchargez l'application Poppo Live</h4>
+        <p data-i18n="step1_desc">Téléchargez Poppo Live depuis le lien officiel ci-dessous. L'application est disponible sur iOS et Android. C'est gratuit !</p>
+        <a href="https://invite-poppo.com/dfZ5W8" target="_blank" class="btn-primary" style="margin-top:14px;display:inline-flex">
+          <i class="fas fa-download"></i> <span data-i18n="dl_app">Télécharger l'application</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-number">02</div>
+      <div class="step-content">
+        <h4 data-i18n="step2_title">Remplir le formulaire d'inscription</h4>
+        <p data-i18n="step2_desc">Lors de la création du compte, choisissez votre pseudo et ajoutez impérativement le suffixe KDG à la fin de votre nom d'affichage.</p>
+        <div class="pseudo-hint">
+          💡 <span data-i18n="step2_hint">Exemple : <strong>MonPseudo.🅚🅓🅖</strong> — ce suffixe est obligatoire !</span>
+          <br>
+          <span style="cursor:pointer;text-decoration:underline;font-size:.85rem;" onclick="copyText('.🅚🅓🅖', this)" data-i18n="copy_suffix">📋 Copier le suffixe .🅚🅓🅖</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-number">03</div>
+      <div class="step-content">
+        <h4 data-i18n="step3_title">Entrer l'ID de l'agence</h4>
+        <p data-i18n="step3_desc">Si la dernière case du formulaire vous demande un ID d'agence (ou code de parrainage), entrez impérativement notre code :</p>
+        <div class="agency-code" onclick="copyText('56887541', this)">
+          <i class="fas fa-copy"></i> 56887541
+          <span style="font-size:.7rem;font-weight:400;margin-left:8px;" data-i18n="tap_copy">(appuyer pour copier)</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-number">04</div>
+      <div class="step-content">
+        <h4 data-i18n="step4_title">Rejoindre l'agence via "Mon Agent"</h4>
+        <p data-i18n="step4_desc">Dans l'application, cherchez la section <strong>"Mon Agent"</strong> dans votre profil ou paramètres. Insérez le code de l'agence pour vous enregistrer. Le nom affiché sera <strong style="color:var(--gold)">Master.KDG</strong>.</p>
+        <div class="agency-code" onclick="copyText('56887541', this)">
+          <i class="fas fa-copy"></i> Code Agence : 56887541
+        </div>
+      </div>
+    </div>
+
+    <div class="step reveal">
+      <div class="step-number">05</div>
+      <div class="step-content">
+        <h4 data-i18n="step5_title">Authentification faciale</h4>
+        <p data-i18n="step5_desc">Une fois enregistré, procédez à la vérification d'identité : téléchargez une photo claire de votre visage, puis lancez l'authentification faciale dans l'application. C'est rapide et sécurisé.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CARDS CTA -->
+  <div class="reg-cards">
+    <div class="reg-card live reveal">
+      <div class="card-icon">🎥</div>
+      <h3 data-i18n="live_card_title">Faire du Live</h3>
+      <p data-i18n="live_card_desc">Commencez à diffuser en direct, rencontrez des milliers de personnes et monétisez votre talent sur Poppo Live.</p>
+      <div class="card-id">MY ID : 56887541</div>
+      <a href="https://invite-poppo.com/dfZ5W8" target="_blank" class="btn-primary" style="background:linear-gradient(135deg,var(--accent),var(--accent2))">
+        <span class="live-dot"></span> <span data-i18n="start_live">Commencer le Live</span>
+      </a>
+    </div>
+    <div class="reg-card agent reveal">
+      <div class="card-icon">🤝</div>
+      <h3 data-i18n="agent_card_title">Devenir Agent</h3>
+      <p data-i18n="agent_card_desc">Rejoignez notre réseau d'agents, recrutez des talents et construisez une source de revenus durable avec KDG Family.</p>
+      <div class="card-id">MY ID : 56887541</div>
+      <a href="https://invite-poppo.com/CfANdB" target="_blank" class="btn-primary">
+        🚀 <span data-i18n="become_agent">Devenir Agent</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ À PROPOS ═══ -->
+<section id="apropos">
+  <div class="section-header reveal">
+    <span class="section-label" data-i18n="about_label">QUI SOMMES-NOUS</span>
+    <h2 class="section-title" data-i18n="about_title">À propos de KDG Family</h2>
+    <div class="section-divider"></div>
+  </div>
+  <div class="about-container">
+    <div class="about-text reveal-left">
+      <h3 data-i18n="about_h3">Notre Mission</h3>
+      <p data-i18n="about_p1">KDG Family est bien plus qu'une simple agence Poppo Live. Nous sommes une communauté dédiée à la <strong>recherche</strong>, à <strong>l'accompagnement</strong> et à <strong>l'établissement de stratégies</strong> gagnantes pour chaque membre.</p>
+      <p data-i18n="about_p2">Notre approche combine un suivi personnalisé, des outils exclusifs et une expertise terrain pour vous permettre de développer votre présence et vos revenus sur Poppo Live, que vous soyez créateur de contenu ou agent.</p>
+      <p data-i18n="about_p3">Sous la direction de <strong style="color:var(--gold)">Master.KDG</strong>, nous construisons ensemble un réseau solide, bienveillant et tourné vers la performance. Rejoignez-nous et écrivez votre success story.</p>
+      <a href="https://wa.me/242055775539" target="_blank" class="btn-whatsapp" style="margin-top:8px;display:inline-flex">
+        <i class="fab fa-whatsapp"></i> <span data-i18n="contact_us">Nous contacter</span>
+      </a>
+    </div>
+    <div class="about-stats reveal-right">
+      <div class="stat-box">
+        <div class="num shimmer-text">500+</div>
+        <div class="label" data-i18n="stat1">Membres actifs</div>
+      </div>
+      <div class="stat-box">
+        <div class="num shimmer-text">50+</div>
+        <div class="label" data-i18n="stat2">Agents partenaires</div>
+      </div>
+      <div class="stat-box">
+        <div class="num shimmer-text">3</div>
+        <div class="label" data-i18n="stat3">Langues supportées</div>
+      </div>
+      <div class="stat-box">
+        <div class="num shimmer-text">24/7</div>
+        <div class="label" data-i18n="stat4">Support disponible</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <div class="footer-logo">KDG FAMILY</div>
+  <p data-i18n="footer_desc">Plateforme premium d'accompagnement Poppo Live — Agence #56887541</p>
+  <div class="footer-links">
+    <a href="#accueil" data-i18n="nav_home">Accueil</a>
+    <a href="#services" data-i18n="nav_services">Services</a>
+    <a href="#enregistrement" data-i18n="nav_register">Enregistrement</a>
+    <a href="#apropos" data-i18n="nav_about">À propos</a>
+    <a href="https://wa.me/242055775539" target="_blank">WhatsApp</a>
+  </div>
+  <p style="margin-top:20px;font-size:.75rem;color:rgba(245,240,255,0.2);">© 2025 KDG Family. Master.KDG — ID 56887541</p>
+</footer>
+
+<!-- FLOATING FAB -->
+<div class="floating-btns">
+  <a href="https://wa.me/242055775539" target="_blank" class="fab fab-wa" title="WhatsApp">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+</div>
+
+<!-- ═══ SCRIPTS ═══ -->
+<script>
+/* ── PARTICLES ── */
+const canvas = document.getElementById('particles-canvas');
+const ctx = canvas.getContext('2d');
+let particles = [];
+const COLORS = ['#FFD700','#9B4DFF','#FF4DBC','#F5F0FF'];
+
+function resize(){
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+class Particle {
+  constructor(){
+    this.reset();
+  }
+  reset(){
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.r = Math.random() * 1.5 + 0.3;
+    this.color = COLORS[Math.floor(Math.random()*COLORS.length)];
+    this.vx = (Math.random()-.5)*0.3;
+    this.vy = (Math.random()-.5)*0.3;
+    this.alpha = Math.random()*0.5+0.1;
+    this.life = 0;
+    this.maxLife = Math.random()*300+200;
+  }
+  update(){
+    this.x += this.vx;
+    this.y += this.vy;
+    this.life++;
+    if(this.life > this.maxLife || this.x<0 || this.x>canvas.width || this.y<0 || this.y>canvas.height){
+      this.reset();
+    }
+  }
+  draw(){
+    ctx.save();
+    ctx.globalAlpha = this.alpha * (1 - this.life/this.maxLife);
+    ctx.fillStyle = this.color;
+    ctx.shadowBlur = 6;
+    ctx.shadowColor = this.color;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+for(let i=0;i<120;i++) particles.push(new Particle());
+
+function animParticles(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{ p.update(); p.draw(); });
+  requestAnimationFrame(animParticles);
+}
+animParticles();
+
+/* ── REVEAL ON SCROLL ── */
+const observer = new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+    }
+  });
+},{threshold:0.12});
+
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>{
+  observer.observe(el);
+  // Stagger children
+  const siblings = el.parentElement.querySelectorAll('.reveal,.reveal-left,.reveal-right');
+  siblings.forEach((s,i)=>{ s.style.transitionDelay = (i*0.1)+'s'; });
+});
+
+/* ── COPY ── */
+function copyText(text, el){
+  navigator.clipboard.writeText(text).then(()=>{
+    showToast();
+  }).catch(()=>{
+    const t = document.createElement('textarea');
+    t.value = text;
+    document.body.appendChild(t);
+    t.select();
+    document.execCommand('copy');
+    document.body.removeChild(t);
+    showToast();
+  });
+}
+function showToast(){
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2000);
+}
+
+/* ── MOBILE MENU ── */
+function toggleMobile(){
+  const m = document.getElementById('mobileMenu');
+  m.style.display = m.style.display==='flex' ? 'none' : 'flex';
+}
+
+/* ── LANGUAGE ── */
+const translations = {
+  fr:{
+    nav_home:'Accueil', nav_services:'Services', nav_register:'Enregistrement',
+    nav_live:'Faire du Live', nav_agent:'Devenir Agent', nav_about:'À propos',
+    hero_sub:'Votre guide officiel Poppo Live',
+    hero_tagline:'🌍 Rencontrez des amis plus intéressants du monde entier',
+    hero_promo:'🔥 Des millions d\'utilisateurs vous attendent — rejoignez la communauté la plus dynamique du monde !',
+    cta_live:'Faire du Live', cta_agent:'Devenir Agent', cta_dl:'Télécharger Poppo Live', cta_wa:'Contactez-nous sur WhatsApp',
+    services_label:'NOS SERVICES', services_title:'Ce que nous offrons',
+    s1_title:'Coaching Live', s1_desc:'Apprenez à maîtriser Poppo Live avec nos guides étape par étape pour maximiser vos gains et votre audience.',
+    s2_title:'Guide d\'inscription', s2_desc:'Instructions claires et précises pour créer votre compte, configurer votre profil et rejoindre notre agence KDG.',
+    s3_title:'Réseau d\'Agents', s3_desc:'Devenez agent KDG et construisez votre propre équipe. Stratégies exclusives pour développer votre activité.',
+    s4_title:'Stratégies & Croissance', s4_desc:'Analyse de performance, conseils de monétisation et accompagnement personnalisé pour chaque membre KDG.',
+    s5_title:'Communauté Globale', s5_desc:'Accédez à un réseau mondial de créateurs et d\'agents partenaires. Ensemble, on va plus loin.',
+    s6_title:'Support Premium', s6_desc:'Une équipe dédiée disponible pour répondre à toutes vos questions et vous accompagner à chaque étape.',
+    reg_label:'GUIDE COMPLET', reg_title:'Comment s\'inscrire',
+    step1_title:'Téléchargez l\'application Poppo Live',
+    step1_desc:'Téléchargez Poppo Live depuis le lien officiel ci-dessous. L\'application est disponible sur iOS et Android. C\'est gratuit !',
+    dl_app:'Télécharger l\'application',
+    step2_title:'Remplir le formulaire d\'inscription',
+    step2_desc:'Lors de la création du compte, choisissez votre pseudo et ajoutez impérativement le suffixe KDG à la fin de votre nom d\'affichage.',
+    step2_hint:'Exemple : <strong>MonPseudo.🅚🅓🅖</strong> — ce suffixe est obligatoire !',
+    copy_suffix:'📋 Copier le suffixe .🅚🅓🅖',
+    step3_title:'Entrer l\'ID de l\'agence',
+    step3_desc:'Si la dernière case du formulaire vous demande un ID d\'agence (ou code de parrainage), entrez impérativement notre code :',
+    tap_copy:'(appuyer pour copier)',
+    step4_title:'Rejoindre l\'agence via "Mon Agent"',
+    step4_desc:'Dans l\'application, cherchez la section <strong>"Mon Agent"</strong> dans votre profil ou paramètres. Insérez le code de l\'agence pour vous enregistrer. Le nom affiché sera <strong style="color:var(--gold)">Master.KDG</strong>.',
+    step5_title:'Authentification faciale',
+    step5_desc:'Une fois enregistré, procédez à la vérification d\'identité : téléchargez une photo claire de votre visage, puis lancez l\'authentification faciale dans l\'application. C\'est rapide et sécurisé.',
+    live_card_title:'Faire du Live', live_card_desc:'Commencez à diffuser en direct, rencontrez des milliers de personnes et monétisez votre talent sur Poppo Live.',
+    start_live:'Commencer le Live',
+    agent_card_title:'Devenir Agent', agent_card_desc:'Rejoignez notre réseau d\'agents, recrutez des talents et construisez une source de revenus durable avec KDG Family.',
+    become_agent:'Devenir Agent',
+    about_label:'QUI SOMMES-NOUS', about_title:'À propos de KDG Family',
+    about_h3:'Notre Mission',
+    about_p1:'KDG Family est bien plus qu\'une simple agence Poppo Live. Nous sommes une communauté dédiée à la <strong>recherche</strong>, à <strong>l\'accompagnement</strong> et à <strong>l\'établissement de stratégies</strong> gagnantes pour chaque membre.',
+    about_p2:'Notre approche combine un suivi personnalisé, des outils exclusifs et une expertise terrain pour vous permettre de développer votre présence et vos revenus sur Poppo Live, que vous soyez créateur de contenu ou agent.',
+    about_p3:'Sous la direction de <strong style="color:var(--gold)">Master.KDG</strong>, nous construisons ensemble un réseau solide, bienveillant et tourné vers la performance. Rejoignez-nous et écrivez votre success story.',
+    contact_us:'Nous contacter',
+    stat1:'Membres actifs', stat2:'Agents partenaires', stat3:'Langues supportées', stat4:'Support disponible',
+    footer_desc:'Plateforme premium d\'accompagnement Poppo Live — Agence #56887541'
+  },
+  en:{
+    nav_home:'Home', nav_services:'Services', nav_register:'Register',
+    nav_live:'Go Live', nav_agent:'Become Agent', nav_about:'About',
+    hero_sub:'Your official Poppo Live guide',
+    hero_tagline:'🌍 Meet more interesting friends from around the world',
+    hero_promo:'🔥 Millions of users are waiting for you — join the most dynamic community in the world!',
+    cta_live:'Go Live', cta_agent:'Become Agent', cta_dl:'Download Poppo Live', cta_wa:'Contact us on WhatsApp',
+    services_label:'OUR SERVICES', services_title:'What we offer',
+    s1_title:'Live Coaching', s1_desc:'Learn to master Poppo Live with our step-by-step guides to maximize your earnings and audience.',
+    s2_title:'Registration Guide', s2_desc:'Clear and precise instructions to create your account, set up your profile and join KDG agency.',
+    s3_title:'Agent Network', s3_desc:'Become a KDG agent and build your own team. Exclusive strategies to grow your business.',
+    s4_title:'Strategy & Growth', s4_desc:'Performance analysis, monetization tips and personalized support for every KDG member.',
+    s5_title:'Global Community', s5_desc:'Access a worldwide network of creators and partner agents. Together, we go further.',
+    s6_title:'Premium Support', s6_desc:'A dedicated team available to answer all your questions and guide you at every step.',
+    reg_label:'COMPLETE GUIDE', reg_title:'How to register',
+    step1_title:'Download Poppo Live app',
+    step1_desc:'Download Poppo Live from the official link below. The app is available on iOS and Android. It\'s free!',
+    dl_app:'Download the app',
+    step2_title:'Fill in the registration form',
+    step2_desc:'When creating your account, choose your username and add the KDG suffix at the end of your display name.',
+    step2_hint:'Example: <strong>MyUsername.🅚🅓🅖</strong> — this suffix is mandatory!',
+    copy_suffix:'📋 Copy suffix .🅚🅓🅖',
+    step3_title:'Enter the agency ID',
+    step3_desc:'If the last field of the form asks for an agency ID (or referral code), you must enter our code:',
+    tap_copy:'(tap to copy)',
+    step4_title:'Join the agency via "My Agent"',
+    step4_desc:'In the app, find the <strong>"My Agent"</strong> section in your profile or settings. Insert the agency code to register. The displayed name will be <strong style="color:var(--gold)">Master.KDG</strong>.',
+    step5_title:'Facial authentication',
+    step5_desc:'Once registered, complete identity verification: upload a clear photo of your face, then launch facial authentication in the app. It\'s fast and secure.',
+    live_card_title:'Go Live', live_card_desc:'Start broadcasting live, meet thousands of people and monetize your talent on Poppo Live.',
+    start_live:'Start Live',
+    agent_card_title:'Become Agent', agent_card_desc:'Join our agent network, recruit talents and build a sustainable income with KDG Family.',
+    become_agent:'Become Agent',
+    about_label:'WHO WE ARE', about_title:'About KDG Family',
+    about_h3:'Our Mission',
+    about_p1:'KDG Family is more than just a Poppo Live agency. We are a community dedicated to <strong>research</strong>, <strong>support</strong> and <strong>developing winning strategies</strong> for every member.',
+    about_p2:'Our approach combines personalized follow-up, exclusive tools and field expertise to help you grow your presence and income on Poppo Live, whether you are a content creator or agent.',
+    about_p3:'Under the leadership of <strong style="color:var(--gold)">Master.KDG</strong>, we build together a solid, caring and performance-driven network. Join us and write your success story.',
+    contact_us:'Contact us',
+    stat1:'Active members', stat2:'Partner agents', stat3:'Languages supported', stat4:'Support available',
+    footer_desc:'Premium Poppo Live support platform — Agency #56887541'
+  },
+  es:{
+    nav_home:'Inicio', nav_services:'Servicios', nav_register:'Registro',
+    nav_live:'Hacer Live', nav_agent:'Ser Agente', nav_about:'Acerca de',
+    hero_sub:'Tu guía oficial de Poppo Live',
+    hero_tagline:'🌍 ¡Conoce amigos más interesantes de todo el mundo!',
+    hero_promo:'🔥 ¡Millones de usuarios te esperan — únete a la comunidad más dinámica del mundo!',
+    cta_live:'Hacer Live', cta_agent:'Ser Agente', cta_dl:'Descargar Poppo Live', cta_wa:'Contáctanos por WhatsApp',
+    services_label:'NUESTROS SERVICIOS', services_title:'Lo que ofrecemos',
+    s1_title:'Coaching Live', s1_desc:'Aprende a dominar Poppo Live con nuestras guías paso a paso para maximizar tus ganancias y audiencia.',
+    s2_title:'Guía de registro', s2_desc:'Instrucciones claras y precisas para crear tu cuenta, configurar tu perfil y unirte a la agencia KDG.',
+    s3_title:'Red de Agentes', s3_desc:'Conviértete en agente KDG y construye tu propio equipo. Estrategias exclusivas para hacer crecer tu negocio.',
+    s4_title:'Estrategia y Crecimiento', s4_desc:'Análisis de rendimiento, consejos de monetización y acompañamiento personalizado para cada miembro KDG.',
+    s5_title:'Comunidad Global', s5_desc:'Accede a una red mundial de creadores y agentes asociados. Juntos, llegamos más lejos.',
+    s6_title:'Soporte Premium', s6_desc:'Un equipo dedicado disponible para responder todas tus preguntas y acompañarte en cada paso.',
+    reg_label:'GUÍA COMPLETA', reg_title:'Cómo registrarse',
+    step1_title:'Descarga la app Poppo Live',
+    step1_desc:'Descarga Poppo Live desde el enlace oficial de abajo. La app está disponible en iOS y Android. ¡Es gratis!',
+    dl_app:'Descargar la aplicación',
+    step2_title:'Completa el formulario de registro',
+    step2_desc:'Al crear la cuenta, elige tu apodo y añade obligatoriamente el sufijo KDG al final de tu nombre de usuario.',
+    step2_hint:'Ejemplo: <strong>MiApodo.🅚🅓🅖</strong> — ¡este sufijo es obligatorio!',
+    copy_suffix:'📋 Copiar sufijo .🅚🅓🅖',
+    step3_title:'Ingresa el ID de la agencia',
+    step3_desc:'Si el último campo del formulario pide un ID de agencia (o código de referido), debes ingresar nuestro código:',
+    tap_copy:'(pulsar para copiar)',
+    step4_title:'Únete a la agencia en "Mi Agente"',
+    step4_desc:'En la app, busca la sección <strong>"Mi Agente"</strong> en tu perfil o configuración. Inserta el código de agencia para registrarte. El nombre mostrado será <strong style="color:var(--gold)">Master.KDG</strong>.',
+    step5_title:'Autenticación facial',
+    step5_desc:'Una vez registrado, completa la verificación de identidad: sube una foto clara de tu rostro y luego inicia la autenticación facial en la app. Es rápido y seguro.',
+    live_card_title:'Hacer Live', live_card_desc:'Empieza a transmitir en vivo, conoce a miles de personas y monetiza tu talento en Poppo Live.',
+    start_live:'Iniciar Live',
+    agent_card_title:'Ser Agente', agent_card_desc:'Únete a nuestra red de agentes, recluta talentos y construye una fuente de ingresos sostenible con KDG Family.',
+    become_agent:'Ser Agente',
+    about_label:'QUIÉNES SOMOS', about_title:'Acerca de KDG Family',
+    about_h3:'Nuestra Misión',
+    about_p1:'KDG Family es mucho más que una simple agencia de Poppo Live. Somos una comunidad dedicada a la <strong>investigación</strong>, el <strong>acompañamiento</strong> y el <strong>establecimiento de estrategias ganadoras</strong> para cada miembro.',
+    about_p2:'Nuestro enfoque combina seguimiento personalizado, herramientas exclusivas y experiencia de campo para ayudarte a desarrollar tu presencia e ingresos en Poppo Live, ya seas creador de contenido o agente.',
+    about_p3:'Bajo la dirección de <strong style="color:var(--gold)">Master.KDG</strong>, construimos juntos una red sólida, solidaria y orientada al rendimiento. Únete y escribe tu historia de éxito.',
+    contact_us:'Contáctanos',
+    stat1:'Miembros activos', stat2:'Agentes asociados', stat3:'Idiomas soportados', stat4:'Soporte disponible',
+    footer_desc:'Plataforma premium de soporte Poppo Live — Agencia #56887541'
+  }
+};
+
+let currentLang = 'fr';
+
+function applyLang(lang){
+  currentLang = lang;
+  const t = translations[lang];
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const key = el.getAttribute('data-i18n');
+    if(t[key] !== undefined){
+      el.innerHTML = t[key];
+    }
+  });
+}
+
+document.getElementById('langSelect').addEventListener('change', e=>{ applyLang(e.target.value); document.getElementById('langSelectMobile').value=e.target.value; });
+document.getElementById('langSelectMobile').addEventListener('change', e=>{ applyLang(e.target.value); document.getElementById('langSelect').value=e.target.value; });
+</script>
+</body>
+</html>
